@@ -1,2 +1,3 @@
 *.yml
-./output/*.yml
+output/
+__pycache__/
