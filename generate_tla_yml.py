@@ -1,9 +1,7 @@
-"""Interactively generate the device and VLAN YAML inventory."""
+# Generates the tla.yml required for Ansible config-generation playbooks.
 
 from pathlib import Path
-
 import yaml
-
 
 DEVICE_SECTIONS = ("brocade", "cisco", "juniper", "nokia", "nokiaaltiplano")
 DEVICE_FIELDS = (
@@ -22,24 +20,19 @@ DEVICE_FIELDS = (
 VLAN_FIELDS = ("description", "vlanid", "dhcp", "mgmt")
 OUTPUT_DIR = Path("output")
 
-
 class InlineMapping(dict):
 	"""Mapping type rendered on one YAML line."""
-
 
 class QuotedString(str):
 	pass
 
-
 class InventoryDumper(yaml.SafeDumper):
 	pass
-
 
 def represent_inline_mapping(dumper, value):
 	node = dumper.represent_dict(value)
 	node.flow_style = True
 	return node
-
 
 InventoryDumper.add_representer(InlineMapping, represent_inline_mapping)
 InventoryDumper.add_representer(
@@ -50,7 +43,6 @@ InventoryDumper.add_representer(
 	QuotedString,
 	lambda dumper, value: dumper.represent_scalar("tag:yaml.org,2002:str", value, style="'"),
 )
-
 
 def prompt_count(label):
 	while True:
@@ -64,14 +56,12 @@ def prompt_count(label):
 			return count
 		print("Please enter zero or a positive number.")
 
-
 def prompt_entry(fields, label, number):
 	print(f"Enter values for {label} {number}:")
 	return {
 		field: QuotedString(input(f"  {field}: ").strip())
 		for field in fields
 	}
-
 
 def collect_inventory():
 	inventory = {section: None for section in DEVICE_SECTIONS}
@@ -91,7 +81,6 @@ def collect_inventory():
 	]
 	return inventory
 
-
 def main():
 	output_path = input("Output file [output/generated.yml]: ").strip() or "generated.yml"
 	inventory = collect_inventory()
@@ -109,7 +98,6 @@ def main():
 			width=4096,
 		)
 	print(f"Wrote {destination}")
-
 
 if __name__ == "__main__":
 	main()

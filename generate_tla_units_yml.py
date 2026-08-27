@@ -1,31 +1,25 @@
-"""Interactively generate a TLA units YAML inventory."""
+# Generates a YAML file containing a list of predetermined interfaces for use in Ansible playbooks.
 
 from pathlib import Path
-
 import yaml
 
 
 UNIT_FIELDS = ("name", "type", "idf", "hrcount", "port")
 OUTPUT_DIR = Path("output")
 
-
 class InlineMapping(dict):
 	"""Mapping type rendered on one YAML line."""
-
 
 class QuotedString(str):
 	pass
 
-
 class UnitsDumper(yaml.SafeDumper):
 	pass
-
 
 def represent_inline_mapping(dumper, value):
 	node = dumper.represent_dict(value)
 	node.flow_style = True
 	return node
-
 
 UnitsDumper.add_representer(InlineMapping, represent_inline_mapping)
 UnitsDumper.add_representer(
@@ -34,7 +28,6 @@ UnitsDumper.add_representer(
 		"tag:yaml.org,2002:str", value, style="'"
 	),
 )
-
 
 def prompt_count():
 	while True:
@@ -58,10 +51,8 @@ def prompt_unit(number):
 		}
 	)
 
-
 def collect_units():
 	return {"units": [prompt_unit(number) for number in range(1, prompt_count() + 1)]}
-
 
 def main():
 	output_path = input("Output file [output/generated_units.yml]: ").strip() or "generated_units.yml"
@@ -79,7 +70,6 @@ def main():
 			width=4096,
 		)
 	print(f"Wrote {destination}")
-
 
 if __name__ == "__main__":
 	main()
