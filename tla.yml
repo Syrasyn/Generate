@@ -1,0 +1,13 @@
+brocade:
+cisco:
+juniper:
+- {hostname: 'test-tla-mdf-01', model: 'qfx5100-48p', uplinklag: 'y', mgmtip: '10.1.1.1/24', customer: '0', idf: '1', submdf: '0', wifi: '0', secnet: '0', doors: '0', l3: 'y'}
+- {hostname: 'test-tla-idf-01', model: 'ex3300-48p', uplinklag: 'n', mgmtip: '10.1.1.2/24', customer: '1', idf: '0', submdf: '0', wifi: '1', secnet: '1', doors: '1', l3: 'n'}
+nokia:
+nokiaaltiplano:
+vlans:
+- {description: 'mgmt', vlanid: '20', dhcp: 'y', mgmt: 'y'}
+- {description: 'customer', vlanid: '300', dhcp: 'y', mgmt: 'n'}
+- {description: 'wifi', vlanid: '255', dhcp: 'y', mgmt: 'n'}
+- {description: 'secnet', vlanid: '225', dhcp: 'n', mgmt: 'n'}
+- {description: 'doors', vlanid: '599', dhcp: 'y', mgmt: 'n'}

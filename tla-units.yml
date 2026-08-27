@@ -1,0 +1,4 @@
+units:
+- {name: 'door1', type: 'door', idf: 'test-tla-idf-01', hrcount: '', port: '1'}
+- {name: 'cam1', type: 'secnet', idf: 'test-tla-idf-01', hrcount: '', port: '2'}
+- {name: 'wifi', type: 'AP', idf: 'test-tla-idf-01', hrcount: '', port: '3'}
